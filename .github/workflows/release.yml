@@ -16,10 +16,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Linux: produces .deb (Ubuntu/Debian), .rpm (Fedora) and .AppImage
+          # Linux x86_64: produces .deb (Ubuntu/Debian), .rpm (Fedora) and .AppImage
           - platform: ubuntu-22.04
             args: ""
-          # Windows: produces .msi and .exe (NSIS) installers
+          # Linux arm64: same bundles, built natively on GitHub's Arm runners
+          # (free for public repos). Native build avoids the broken
+          # cross-compilation story for the AppImage tooling.
+          - platform: ubuntu-22.04-arm
+            args: ""
+          # Windows x86_64: produces .msi and .exe (NSIS) installers
           - platform: windows-latest
             args: ""
 
@@ -28,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Linux dependencies
-        if: matrix.platform == 'ubuntu-22.04'
+        if: startsWith(matrix.platform, 'ubuntu')
         run: |
           sudo apt-get update
           sudo apt-get install -y \
