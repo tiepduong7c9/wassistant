@@ -1,6 +1,6 @@
 [package]
 name = "wassistant"
-version = "0.1.0"
+version = "0.1.1"
 description = "Improve your writing with an LLM via OpenRouter"
 authors = ["Tiep Duong"]
 edition = "2021"
